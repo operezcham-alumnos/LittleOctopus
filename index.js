@@ -17,7 +17,7 @@ const server = http.createServer((req, res) => {
     const paginaHtmlPath = './index.html';
     const paginaHtml = fs.readFileSync(paginaHtmlPath, 'utf8');
     res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Type', 'text/html');
     res.end(JSON.stringify(paginaHtml);
   }
 });
