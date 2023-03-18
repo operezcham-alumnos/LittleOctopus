@@ -10,7 +10,11 @@ const mensajes = [
 
 const server = http.createServer((req, res) => {
  if (req.method === 'GET' && req.url === 'mensaje') {
-    const paginaHtmlPath = './pagina.html';
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(mensajes));
+  } else if(req.method === 'GET' && req.url === '/') {
+    const paginaHtmlPath = './index.html';
     const paginaHtml = fs.readFileSync(paginaHtmlPath, 'utf8');
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
