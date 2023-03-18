@@ -9,7 +9,7 @@ const mensajes = [
 ];
 
 const server = http.createServer((req, res) => {
- if (req.method === 'GET' && req.url === 'mensaje.json') {
+ if (req.method === 'GET' && req.url === 'mensajes.json') {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(mensajes));
@@ -18,7 +18,7 @@ const server = http.createServer((req, res) => {
     const paginaHtml = fs.readFileSync(paginaHtmlPath, 'utf8');
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(mensajes));
+    res.end(JSON.stringify(pagina.Html);
   }
 });
 server.listen(PORT, () => {
