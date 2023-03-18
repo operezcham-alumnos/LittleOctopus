@@ -14,7 +14,7 @@ const server = http.createServer((req, res) => {
     const paginaHtml = fs.readFileSync(paginaHtmlPath, 'utf8');
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
-    res.end(JSON.stringify(nuevoUsuario));
+    res.end(JSON.stringify(mensajes));
   }
 });
 server.listen(PORT, () => {
