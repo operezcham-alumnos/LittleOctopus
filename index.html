@@ -23,7 +23,7 @@
 
         function obtenerMensajes(){
         fetch('/mensajesLista')
-        .then(Response=>Response.json())
+        .then(response=>response.json())
         .then(data=> { imprimirMensajes(data);
         })
         .catch(error => {
@@ -51,7 +51,7 @@
                 }
         }
         function guardarMensaje(event){
-            event.prevenDefault();
+            event.preventDefault();
             const mensajeContenido = document.getElementById("mensajeEnviado").value;
             fetch('/mensajesNuevo', {
                 method: 'POST', 
