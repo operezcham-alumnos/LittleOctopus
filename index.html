@@ -8,15 +8,21 @@
 </head>
 <body onload="cambiar()">
 <!--<input type="text">-->
+<form id="nuevoMensaje">
 <h2>😀Escriba su mensaje:</h2>
-    <textarea></textarea>
-    <button>Enviar 🪁</button>
+    <textarea id="mensajeEnviado" name="mensajeEnviado"></textarea>
+    <button type="submit">Enviar 🪁</button>
+</form>
     <!--<div> y <Section> son lo mismo-->
         <div id="mensajes">
 
         </div>
     <script>
-        fetch('/mensajes.json')
+
+        const formularioMensajeNuevo =document.getElementById("nuevoMensaje");
+
+        function obtenerMensajes(){
+        fetch('/mensajesLista')
         .then(Response=>Response.json())
         .then(data=> { imprimirMensajes(data);
         })
@@ -42,8 +48,28 @@
                         <span class="mensaje-texto">${mensaje.texto} <br></span>`;
                         //mensajeElement.appendChild(mensajeElement);
                     });
-}
+                }
+        }
+        function guardarMensaje(event){
+            event.prevenDefault();
+            const mensajeContenido = document.getElementById("mensajeEnviado").value;
+            fetch('/mensajesNuevo', {
+                method: 'POST', 
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({mensajeContenido})
+            })
+            .then(response => response.json())
+            .then(data => {
+                obtenerMensajes();
+                formularioMensajeNuevo.reset();});
+        }
 
+        //Obtener los mensajes del servidor al cargar la pagina
+        obtenerMensajes();
+        //agregar eventos
+        formularioMensajeNuevo.addEventListener('submit',guardarMensaje);
     </script>
 </body>
 </html>
