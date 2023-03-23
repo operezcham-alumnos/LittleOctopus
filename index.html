@@ -1,70 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-<!--<input type="text">-->
-<form id="nuevoMensaje">
-<h2>😀Escriba su mensaje:</h2>
-    <textarea id="mensajeEnviado" name="mensajeEnviado"></textarea>
-    <button type="submit">Enviar 🪁</button>
-</form>
-    <!--<div> y <Section> son lo mismo-->
-        <div id="mensajes">
 
-        </div>
+<body>
+    <!--<input type="text">-->
+    <form id="nuevoMensaje">
+        <h2>😀Escriba su mensaje:</h2>
+        <textarea id="mensajeEnviado" name="mensajeEnviado"></textarea>
+        <button type="submit">Enviar 🪁</button>
+    </form>
+    <!--<div> y <Section> son lo mismo-->
+    <div id="mensajes">
+
+    </div>
     <script>
 
-        const formularioMensajeNuevo =document.getElementById("nuevoMensaje");
+        const formularioMensajeNuevo =
+            document.getElementById("nuevoMensaje");
 
-        function obtenerMensajes(){
-        fetch('/mensajesLista')
-        .then(response=>response.json())
-        .then(data=> { imprimirMensajes(data);
-        })
-        .catch(error => {
-            console.error('Error al cargar los mensajes: ', error);
-        });
-  
+        function obtenerMensajes() {
+            fetch('/mensajesLista')
+                .then(response => response.json())
+                .then(data => {
+                    imprimirMensajes(data);
+                }).catch(error => {
+                    console.error('Error al cargar los mensajes: ', error);
+                });
+        }
+
         const mensajesContainer =
-                document.querySelector('#mensajes-container');
-                function imprimirMensajes(mensajes) {
-                    const mensajeElement =document.getElementById("mensajes");
-                     mensajeElement.innerHTML='';
-                    mensajes.forEach(mensaje => {
-                        mensajeElement.classList.add('mensaje');
-                        mensajeElement.innerHTML += `
+            document.querySelector('#mensajes-container');
+
+        function imprimirMensajes(mensajes) {
+            const mensajeElement = document.getElementById("mensajes");
+            mensajeElement.innerHTML = '';
+            mensajes.forEach(mensaje => {
+                mensajeElement.classList.add('mensaje');
+                mensajeElement.innerHTML += `
                         <span class="mensaje-usuario">${mensaje.usuario}</span>
                         <span class="mensaje-fecha">${mensaje.fecha}</span>
                         <span class="mensaje-texto">${mensaje.texto} <br></span>`;
-                        //mensajeElement.appendChild(mensajeElement);
-                    });
-                }
+                //mensajeElement.appendChild(mensajeElement);
+            });
         }
-        function guardarMensaje(event){
+
+        function guardarMensaje(event) {
             event.preventDefault();
-            const mensajeContenido = document.getElementById("mensajeEnviado").value;
+            const mensajeContenido =
+                document.getElementById("mensajeEnviado").value;
             fetch('/mensajesNuevo', {
-                method: 'POST', 
+                method: 'POST',
                 headers: {
-                    'Content-Type':'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(mensajeContenido)
             })
-            .then(response => response.json())
-            .then(data => {
-                obtenerMensajes();
-                formularioMensajeNuevo.reset();});
+                .then(response => response.json())
+                .then(data => {
+                    obtenerMensajes();
+                    formularioMensajeNuevo.reset();
+                });
         }
 
         //Obtener los mensajes del servidor al cargar la pagina
         obtenerMensajes();
         //agregar eventos
-        formularioMensajeNuevo.addEventListener('submit',guardarMensaje);
+        formularioMensajeNuevo.addEventListener('submit', guardarMensaje);
     </script>
 </body>
+
 </html>
