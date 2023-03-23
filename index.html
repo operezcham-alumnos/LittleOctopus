@@ -29,19 +29,13 @@
         .catch(error => {
             console.error('Error al cargar los mensajes: ', error);
         });
-        const cambiar = () => {
-            const m=document.getElementById("mensajes");
-            for(let i=0; i<mensajes.length; i++){
-                m.innerHTML+=mensajes[i].usuario + ":" + mensajes[i].texto;
-                m.innerHTML+='<br>';
-            }
-        }
+  
         const mensajesContainer =
                 document.querySelector('#mensajes-container');
                 function imprimirMensajes(mensajes) {
+                    const mensajeElement =document.getElementById("mensajes");
                      mensajeElement.innerHTML='';
                     mensajes.forEach(mensaje => {
-                    const mensajeElement =document.getElementById("mensajes");
                         mensajeElement.classList.add('mensaje');
                         mensajeElement.innerHTML += `
                         <span class="mensaje-usuario">${mensaje.usuario}</span>
