@@ -24,12 +24,16 @@ const server = http.createServer((req, res) => {
     req.on('data', chunk => {body+=chunk.toString()});
     req.on('end', () => {
         const nuevoMensaje = JSON.parse(body);
-        mensajes.texto=nuevoMensaje;
-       // mensajes.fecha.push(Date());
-        //mensajes.usuario.push(nuevo);
-        res.statusCode=201;
+        let mensaje = {
+          "texto":nuevoMensaje,
+          "usuario": "anonimo",
+          "fecha": Date.now()
+        };
+      mensajes.push(mensaje);
+        //mensajes.texto=nuevoMensaje;
+        res.statusCode=200;
         res.setHeader('Content-Type','application/json');
-        res.end(JSON.stringify(nuevoMensaje));
+        res.end(JSON.stringify(mensaje));
     });
   }
 });
