@@ -24,9 +24,9 @@ const server = http.createServer((req, res) => {
     req.on('data', chunk => {body+=chunk.toString()});
     req.on('end', () => {
         const nuevoMensaje = JSON.parse(body);
-        mensajes.texto.push(nuevoMensaje);
-        mensajes.fecha.push(Date());
-        mensajes.usuario.push("eder");
+        mensajes.texto=nuevoMensaje;
+       // mensajes.fecha.push(Date());
+        //mensajes.usuario.push(nuevo);
         res.statusCode=201;
         res.setHeader('Content-Type','application/json');
         res.end(JSON.stringify(nuevoMensaje));
