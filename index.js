@@ -6,7 +6,7 @@ const fs = require("fs");
 
 const mensajes = [
   {
-    id:"0",
+    id:"1",
     usuario: "servidor",
     texto: "saludos, envie su mensaje",
     fecha: "2023-2-2",
