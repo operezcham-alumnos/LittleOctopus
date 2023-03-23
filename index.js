@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
     req.on("end", () => {
       const nuevoMensaje = JSON.parse(body);
       let mensaje = {
-        id:mensajes[mensaje.length-1].id+1,
+        id:mensajes[mensajes.length-1].id+1,
         texto: nuevoMensaje,
         usuario: "anonimo",
         fecha: Date(),
