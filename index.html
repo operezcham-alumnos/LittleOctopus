@@ -17,7 +17,7 @@
     <form id="borrarMensaje">
         <h2>Eliminar Mensaje</h2>
         <label>Ingrese el id del mensaje que desea borrar:</label>
-        <input type="text" id="mensajeEnviado" name="mensajeEnviado">
+        <input type="text" id="Borrar" name="Borrar">
         <button type="submit">Eliminar 🪁</button>
     </form>
     <!--<div> y <Section> son lo mismo-->
@@ -72,7 +72,7 @@
       }
       function eliminarMensaje(event){
         event.preventDefault();
-        const id = document.getElementById("mensajeEnviado");
+        const id = document.getElementById("Borrar");
         fetch('/mensajeBorrar/${id}',{
             method: 'DELETE'
         })
@@ -86,6 +86,7 @@
       obtenerMensajes();
       //agregar eventos
       formularioMensajeNuevo.addEventListener("submit", guardarMensaje);
+      formularioMensajeEliminar.addEventListener("submit", eliminarMensaje);
     </script>
   </body>
 </html>
