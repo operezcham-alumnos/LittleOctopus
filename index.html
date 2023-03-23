@@ -14,10 +14,17 @@
       <textarea id="mensajeEnviado" name="mensajeEnviado"></textarea>
       <button type="submit">Enviar 🪁</button>
     </form>
+    <form id="borrarMensaje">
+        <h2>Eliminar Mensaje</h2>
+        <label>Ingrese el id del mensaje que desea borrar:</label>
+        <input type="text" id="mensajeEnviado" name="mensajeEnviado">
+        <button type="submit">Eliminar 🪁</button>
+    </form>
     <!--<div> y <Section> son lo mismo-->
     <div id="mensajes"></div>
     <script>
       const formularioMensajeNuevo = document.getElementById("nuevoMensaje");
+      const formularioMensajeEliminar = document.getElementById("borrarMensaje");
 
       function obtenerMensajes() {
         fetch("/mensajesLista")
@@ -62,6 +69,17 @@
             obtenerMensajes();
             formularioMensajeNuevo.reset();
           });
+      }
+      function eliminarMensaje(event){
+        event.preventDefault();
+        const id = document.getElementById("mensajeEnviado");
+        fetch('/mensajeBorrar',{
+            method: 'DELETE'
+        })
+        .then(() => {
+            obtenerMensajes();
+            formularioMensajeEliminar.reset();
+        })
       }
 
       //Obtener los mensajes del servidor al cargar la pagina
