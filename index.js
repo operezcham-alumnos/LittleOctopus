@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
         let mensaje = {
           "texto":nuevoMensaje,
           "usuario": "anonimo",
-          "fecha": Date.now().toLocalString()
+          "fecha": Date()
         };
       mensajes.push(mensaje);
         //mensajes.texto=nuevoMensaje;
