@@ -63,6 +63,7 @@
             .then(response => response.json())
             .then(data => {
                 obtenerMensajes();
+                document.getElementById("mensajes").innerHTML="";
                 formularioMensajeNuevo.reset();});
         }
 
