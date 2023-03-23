@@ -44,7 +44,23 @@ const server = http.createServer((req, res) => {
       res.setHeader("Content-Type", "application/json");
       res.end(JSON.stringify(mensaje));
     });
-  }
+  } else if (req.method === 'DELETE' && req.url.startsWith('/mensajeBorrar/')) {
+      const idMensaje = req.url.split('/')[2];
+      const indiceMensaje = mensajes.findIndex(m => m.id === parseInt(idMensaje));
+      if (indiceMensaje >= 0){
+        mensajes.splice(indiceMensaje, 1);
+        res.statusCode = 204;
+        res.end();
+      } else {
+        res.statusCode = 404;
+        res.setHeader('Content-Type', "text/plain")
+        res.end('Mensaje no encontrado');
+        }
+      }else {
+        res.statusCode = 404;
+        res.setHeader('Content-Type', "text/plain")
+        res.end("Páginano encontrada");
+      }
 });
 server.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}/`);
