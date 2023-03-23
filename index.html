@@ -73,7 +73,7 @@
       function eliminarMensaje(event){
         event.preventDefault();
         const id = document.getElementById("Borrar").value;
-        fetch('/mensajeBorrar/${id}',{
+        fetch('/mensajeBorrar/' + id,{
             method: 'DELETE'
         })
         .then(() => {
