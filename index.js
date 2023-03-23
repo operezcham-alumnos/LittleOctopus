@@ -31,7 +31,10 @@ const server = http.createServer((req, res) => {
     });
     req.on("end", () => {
       const nuevoMensaje = JSON.parse(body);
-      let identificador=(mensajes[mensajes.length-1].id | 0) + 1;
+      let ultimoMensaje = mensajes[mensajes.length-1]
+      let identificador = 1
+      if (ultimoMensaje) identificador = ultimoMensaje.id + 1
+      //let identificador=(.id | 0) + 1;
       let mensaje = {
         id: identificador,
         texto: nuevoMensaje,
