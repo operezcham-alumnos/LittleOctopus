@@ -1,1 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
+  <body>
+    <!--<input type="text">-->
+    <form id="nuevoMensaje">
+      <h2>😀Escriba su mensaje:</h2>
+      <textarea id="mensajeEnviado" name="mensajeEnviado"></textarea>
+      <button type="submit">Enviar 🪁</button>
+    </form>
+    <form id="borrarMensaje">
+        <h2>Eliminar Mensaje</h2>
+        <label>Ingrese el id del mensaje que desea borrar:</label>
+        <input type="text" id="Borrar" name="Borrar">
+        <button type="submit">Eliminar 🪁</button>
+    </form>
+    <!--<div> y <Section> son lo mismo-->
+    <div id="mensajes"></div>
+    <script>
+      const formularioMensajeNuevo = document.getElementById("nuevoMensaje");
+      const formularioMensajeEliminar = document.getElementById("borrarMensaje");
+
+      function obtenerMensajes() {
+        fetch("/mensajesLista")
+          .then((response) => response.json())
+          .then((data) => {
+            imprimirMensajes(data);
+          })
+          .catch((error) => {
+            console.error("Error al cargar los mensajes: ", error);
+          });
+      }
+
+      const mensajesContainer = document.querySelector("#mensajes-container");
+
+      function imprimirMensajes(mensajes) {
+        const mensajeElement = document.getElementById("mensajes");
+        mensajeElement.innerHTML = "";
+        mensajes.forEach((mensaje) => {
+          mensajeElement.classList.add("mensaje");
+          mensajeElement.innerHTML += `
+                        <span class="mensaje-usuario">${mensaje.id}</span>
+                        <span class="mensaje-usuario">${mensaje.usuario}</span>
+                        <span class="mensaje-fecha">${mensaje.fecha}</span>
+                        <span class="mensaje-texto">${mensaje.texto} <br></span>`;
+          //mensajeElement.appendChild(mensajeElement);
+        });
+      }
+
+      function guardarMensaje(event) {
+        event.preventDefault();
+        const mensajeContenido =
+          document.getElementById("mensajeEnviado").value;
+        fetch("/mensajesNuevo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(mensajeContenido),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            obtenerMensajes();
+            formularioMensajeNuevo.reset();
+          });
+      }
+      function eliminarMensaje(event){
+        event.preventDefault();
+        const id = document.getElementById("Borrar").value;
+        fetch('/mensajeBorrar/' + id,{
+            method: 'DELETE'
+        })
+        .then(() => {
+            obtenerMensajes();
+            formularioMensajeEliminar.reset();
+        })
+      }
+
+      //Obtener los mensajes del servidor al cargar la pagina
+      obtenerMensajes();
+      //agregar eventos
+      formularioMensajeNuevo.addEventListener("submit", guardarMensaje);
+      formularioMensajeEliminar.addEventListener("submit", eliminarMensaje);
+      
+      setInterval(obtenerMensajes, 1500);
+    </script>
+  </body>
+</html>
